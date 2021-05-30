@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Alarm</string>
+    <string name="alarms">%1$s Alarms</string>
+    <string name="alarm">%1$s Alarm</string>
+    <string name="timeFormatHM">%1$s:%2$s</string>
+    <string name="timeFormatAMPM">%1$s:%2$s %3$s</string>
+    <string name="new_alarm">New Alarm</string>
+    <string name="title">Title</string>
+    <string name="add">Add</string>
+    <string name="select_alarm_time">Select Alarm Time</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="snooze">Snooze</string>
+    <string name="info">Info</string>
+    <string name="hint">Press and hold to delete.</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    * Copyright (C) 2021  Ali Moukaled
+    *
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU General Public License as published by
+    * the Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
+
+<resources>
+    <!--  Material TextField Style  -->
+    <style name="TextFieldStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginRight">2.5dp</item>
+        <item name="android:layout_marginLeft">2.5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="boxStrokeColor">@color/deepOrange500</item>
+        <item name="hintTextColor">@color/deepOrange500</item>
+    </style>
+
+    <!-- Button Style  -->
+    <style name="CustomButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="background">@color/deepOrange500</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <!-- Bottom sheet style -->
+    <style name="CustomBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+</resources>

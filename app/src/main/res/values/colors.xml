@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    * Copyright (C) 2021  Ali Moukaled
+    *
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU General Public License as published by
+    * the Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
+
+<resources>
+    <!-- Basic  -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--  Deep Purple  -->
+    <color name="deepPurple300">#9575cd</color>
+    <color name="deepPurple200">#b39ddb</color>
+    <color name="deepPurple50">#ede7f6</color>
+    <color name="deepPurple100">#d1c4e9</color>
+    <color name="deepPurple400">#7e57c2</color>
+    <color name="deepPurple500">#673ab7</color>
+    <color name="deepPurple600">#5e35b1</color>
+    <color name="deepPurple700">#512da8</color>
+    <color name="deepPurple800">#4527a0</color>
+    <color name="deepPurple900">#311b92</color>
+
+    <!--  Purple  -->
+    <color name="purple50">#f3e5f5</color>
+    <color name="purple100">#e1bee7</color>
+    <color name="purple200">#ce93d8</color>
+    <color name="purple300">#ba68c8</color>
+    <color name="purple400">#ab47bc</color>
+    <color name="purple500">#9c27b0</color>
+    <color name="purple600">#8e24aa</color>
+    <color name="purple700">#7b1fa2</color>
+    <color name="purple800">#6a1b9a</color>
+    <color name="purple900">#4a148c</color>
+
+    <!--  Deep Orange  -->
+    <color name="deepOrange50">#fbe9e7</color>
+    <color name="deepOrange100">#ffccbc</color>
+    <color name="deepOrange200">#ffab91</color>
+    <color name="deepOrange300">#ff8a65</color>
+    <color name="deepOrange400">#ff7043</color>
+    <color name="deepOrange500">#ff5722</color>
+    <color name="deepOrange600">#f4511e</color>
+    <color name="deepOrange700">#e64a19</color>
+    <color name="deepOrange800">#d84315</color>
+    <color name="deepOrange900">#bf360c</color>
+
+    <!--  Grey  -->
+    <color name="grey300">#e0e0e0</color>
+    <color name="grey200">#eeeeee</color>
+    <color name="grey100">#f5f5f5</color>
+    <color name="grey50">#fafafa</color>
+    <color name="grey400">#bdbdbd</color>
+    <color name="grey500">#9e9e9e</color>
+    <color name="grey600">#757575</color>
+    <color name="grey700">#616161</color>
+    <color name="grey800">#424242</color>
+    <color name="grey900">#212121</color>
+
+
+    <!--  Blue Grey -->
+    <color name="blueGrey100">#cfd8dc</color>
+    <color name="blueGrey50">#eceff1</color>
+    <color name="blueGrey200">#b0bec5</color>
+    <color name="blueGrey300">#90a4ae</color>
+
+    <!--  Green  -->
+    <color name="green50">#e8f5e9</color>
+    <color name="green100">#c8e6c9</color>
+    <color name="green200">#a5d6a7</color>
+    <color name="green300">#81c784</color>
+    <color name="green400">#66bb6a</color>
+    <color name="green500">#4caf50</color>
+    <color name="green600">#43a047</color>
+    <color name="green700">#388e3c</color>
+    <color name="green800">#2e7d32</color>
+    <color name="green900">#1b5e20</color>
+
+    <!--  Teal  -->
+    <color name="teal50">#e0f2f1</color>
+    <color name="teal100">#b2dfdb</color>
+    <color name="teal200">#80cbc4</color>
+    <color name="teal300">#4db6ac</color>
+    <color name="teal400">#26a69a</color>
+    <color name="teal500">#009688</color>
+    <color name="teal600">#00897b</color>
+    <color name="teal700">#00796b</color>
+    <color name="teal800">#00695c</color>
+    <color name="teal900">#004d40</color>
+
+    <!-- Red -->
+    <color name="red50">#ffebee</color>
+    <color name="red100">#ffcdd2</color>
+    <color name="red200">#ef9a9a</color>
+    <color name="red300">#e57373</color>
+    <color name="red400">#ef5350</color>
+    <color name="red500">#f44336</color>
+    <color name="red600">#e53935</color>
+    <color name="red700">#d32f2f</color>
+    <color name="red800">#c62828</color>
+    <color name="red900">#b71c1c</color>
+</resources>
