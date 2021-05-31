@@ -43,7 +43,7 @@ data class AlarmEntity(
     var minute: Int,
 
     @ColumnInfo(name = "isActive")
-    var isActive: Boolean
+    var isActive: Boolean = true
 ) {
 
 

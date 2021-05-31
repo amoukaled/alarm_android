@@ -271,4 +271,36 @@ class DefaultAlarmRepositoryTest {
         job.cancel()
     }
 
+    /**
+     * Cancels the alarm and checks if the isActive property is set
+     * correctly to false.
+     */
+    @Test
+    fun createAlarmAndCancel() {
+        var flow: List<AlarmEntity>? = null
+
+        val job = scope.launch {
+            repo.repoAlarms.collect {
+                flow = it
+            }
+        }
+
+        assertThat(flow).isNotNull()
+
+        // Add
+        scope.runBlockingTest {
+            repo.addAlarm(AndroidTestData.alarm1)
+        }
+        assertThat(flow).isNotEmpty()
+        assertThat(flow?.get(0)?.isActive).isTrue()
+
+        // Cancel
+        scope.runBlockingTest {
+            repo.cancelAlarmAfterSetOff(flow?.get(0)?.id!!)
+        }
+        assertThat(flow?.get(0)?.isActive).isFalse()
+
+        job.cancel()
+    }
+
 }

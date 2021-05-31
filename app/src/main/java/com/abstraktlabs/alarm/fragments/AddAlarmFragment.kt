@@ -94,7 +94,7 @@ class AddAlarmFragment : BottomSheetDialogFragment() {
                 this@apply.titleTV.text?.also {
                     if (it.isNotBlank()) {
                         model.addAlarm(
-                            AlarmEntity(it.toString(), hour, minute, true),
+                            AlarmEntity(it.toString(), hour, minute),
                             activity!!.applicationContext
                         )
                         this@AddAlarmFragment.dismiss()

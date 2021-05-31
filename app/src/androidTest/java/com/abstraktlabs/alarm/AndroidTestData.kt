@@ -24,7 +24,6 @@ object AndroidTestData {
         title = "TestAlarm1",
         hour = 1,
         minute = 50,
-        isActive = false
     )
 
 
