@@ -22,6 +22,7 @@ import androidx.test.filters.SmallTest
 import com.abstraktlabs.alarm.AndroidTestData
 import com.abstraktlabs.alarm.models.DispatcherProvider
 import com.abstraktlabs.alarm.room.AlarmDao
+import com.abstraktlabs.alarm.room.AlarmEntity
 import com.abstraktlabs.alarm.utils.logInstance
 import com.google.common.truth.Truth.assertThat
 
@@ -29,8 +30,11 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.runBlockingTest
 
 import org.junit.Before
 import org.junit.Rule
@@ -84,6 +88,7 @@ class DefaultAlarmRepositoryTest {
 
     /**
      * Adds a new alarm and checks if added to the DB.
+     * Checks if the id is not defaulted to 0.
      */
     @Test
     fun addAlarmAndCheckDB() {
@@ -91,6 +96,7 @@ class DefaultAlarmRepositoryTest {
             repo.addAlarm(AndroidTestData.alarm1)
             val alarms = repo.getAllAlarms()
             assertThat(alarms.also(::logInstance)).isNotEmpty()
+            assertThat(alarms[0].id.also(::logInstance)).isNotEqualTo(0)
         }
     }
 
@@ -145,68 +151,124 @@ class DefaultAlarmRepositoryTest {
         }
     }
 
-//    /**
-//     * Adds an alarm and checks stateflow for new events.
-//     */
-//    @Test
-//    fun addAlarmAndCheckStateFlow() {
-//
-//        var event: AlarmEvent<List<AlarmEntity>>? = null
-//
-//        val job = scope.launch {
-//            repo.alarms.collect {
-//                event = it
-//            }
-//        }
-//
-//        assertThat(event).isNotNull()
-//        assertThat(event.also(::logInstance)).isInstanceOf(AlarmEvent.Empty::class.java)
-//
-//        scope.runBlockingTest {
-//            repo.addAlarm(AndroidTestData.alarm1)
-//        }
-//
-//        assertThat(event.also(::logInstance)).isNotNull()
-//        assertThat(event?.data.also(::logInstance)).isNotEmpty()
-//
-//        job.cancel()
-//    }
-//
-//    /**
-//     * Adds an alarm and checks stateflow for new events.
-//     * Removes the alarms and checks again for Empty event.
-//     */
-//    @Test
-//    fun addAlarmAndCheckStateFlowForEmpty() {
-//
-//        // Set up
-//        var event: AlarmEvent<List<AlarmEntity>>? = null
-//        val job = scope.launch {
-//            repo.alarms.collect {
-//                event = it
-//            }
-//        }
-//        assertThat(event).isNotNull()
-//        assertThat(event.also(::logInstance)).isInstanceOf(AlarmEvent.Empty::class.java)
-//
-//        // Add
-//        scope.runBlockingTest {
-//            repo.addAlarm(AndroidTestData.alarm1)
-//        }
-//        // Check
-//        assertThat(event.also(::logInstance)).isNotNull()
-//        assertThat(event?.data.also(::logInstance)).isNotEmpty()
-//
-//        // Delete
-//        scope.runBlockingTest {
-//            val alarm = repo.getAllAlarms()[0]
-//            repo.deleteAlarm(alarm)
-//        }
-//
-//        // Check
-//        assertThat(event.also(::logInstance)).isInstanceOf(AlarmEvent.Empty::class.java)
-//        assertThat(event?.message.also(::logInstance)).isNotNull()
-//
-//        job.cancel()
-//    }
+    /**
+     * Adds a new alarm and gets the alarm by id.
+     */
+    @Test
+    fun addAlarmAndGetById() {
+        runBlocking {
+            // Add
+            repo.addAlarm(AndroidTestData.alarm1)
+
+            // Check
+            val alarms = repo.getAllAlarms()
+            assertThat(alarms.also(::logInstance)).isNotEmpty()
+
+            val alarmAdded = repo.getAlarmById(1)
+            assertThat(alarmAdded.also(::logInstance)).isNotNull()
+            assertThat(alarmAdded?.title).isEqualTo(AndroidTestData.alarm1.title)
+        }
+    }
+
+
+    /**
+     * Adds an alarm and checks stateflow for new events.
+     */
+    @Test
+    fun addAlarmAndCheckStateFlow() {
+
+        var flow: List<AlarmEntity>? = null
+
+        val job = scope.launch {
+            repo.repoAlarms.collect {
+                flow = it
+            }
+        }
+
+        assertThat(flow).isNotNull()
+        assertThat(flow.also(::logInstance)).isEmpty()
+
+        scope.runBlockingTest {
+            repo.addAlarm(AndroidTestData.alarm1)
+        }
+
+        assertThat(flow.also(::logInstance)).isNotNull()
+        assertThat(flow?.also(::logInstance)).isNotEmpty()
+
+        job.cancel()
+    }
+
+    /**
+     * Adds an alarm and checks stateflow for new events.
+     * Removes the alarms and checks again for empty list event.
+     */
+    @Test
+    fun addAlarmAndCheckStateFlowForEmpty() {
+
+        // Set up
+        var flow: List<AlarmEntity>? = null
+        val job = scope.launch {
+            repo.repoAlarms.collect {
+                flow = it
+            }
+        }
+        assertThat(flow).isNotNull()
+        assertThat(flow.also(::logInstance)).isEmpty()
+
+        // Add
+        scope.runBlockingTest {
+            repo.addAlarm(AndroidTestData.alarm1)
+        }
+        // Check
+        assertThat(flow.also(::logInstance)).isNotNull()
+        assertThat(flow).isNotEmpty()
+
+        // Delete
+        scope.runBlockingTest {
+            val alarm = repo.getAllAlarms()[0]
+            repo.deleteAlarm(alarm)
+        }
+
+        // Check
+        assertThat(flow.also(::logInstance)).isEmpty()
+
+        job.cancel()
+    }
+
+    /**
+     * Adds a new alarm and checks for new event.
+     * Updates the alarm and checks for new events.
+     */
+    @Test
+    fun addNewAlarmAndUpdate() {
+
+        var flow: List<AlarmEntity>? = null
+
+        val job = scope.launch {
+            repo.repoAlarms.collect {
+                flow = it
+            }
+        }
+
+        assertThat(flow).isNotNull()
+
+        // Add
+        scope.runBlockingTest {
+            repo.addAlarm(AndroidTestData.alarm1)
+        }
+        assertThat(flow.also(::logInstance)).isNotEmpty()
+        assertThat(flow?.get(0)?.title).isEqualTo(AndroidTestData.alarm1.title)
+
+        // Update
+        val alarm = flow?.get(0)
+        alarm?.title = "Changed"
+
+        scope.runBlockingTest {
+            repo.updateAlarm(alarm!!)
+        }
+        assertThat(flow?.get(0)?.title).isEqualTo("Changed")
+
+        job.cancel()
+    }
+
 }

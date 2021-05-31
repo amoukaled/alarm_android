@@ -21,7 +21,7 @@ import java.text.DateFormat
 import java.util.*
 
 // Log TAG for easier filtering
-private const val tag = "DEBUG*/"
+private const val tag = "DEBUG/"
 
 /**
  * Logs the instance to the console.
