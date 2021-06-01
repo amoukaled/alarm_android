@@ -106,6 +106,18 @@ class DefaultAlarmRepository @Inject constructor(private val dao: AlarmDao) : Al
                 alarm.startAlarm(context)
             }
         }
+    }
 
+    /**
+     * Restarts all active alarms.
+     */
+    suspend fun restartAllActiveAlarms(context: Context) {
+        val alarms = this.getAllAlarms()
+
+        for (alarm in alarms) {
+            if (alarm.isActive) {
+                alarm.startAlarm(context)
+            }
+        }
     }
 }
