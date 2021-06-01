@@ -45,8 +45,6 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    // todo on reboot
-    // todo on time change
     // todo on doze mode
 
 }
