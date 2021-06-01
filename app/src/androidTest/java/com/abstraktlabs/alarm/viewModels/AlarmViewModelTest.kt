@@ -12,7 +12,6 @@ import com.abstraktlabs.alarm.models.DispatcherProvider
 import com.abstraktlabs.alarm.repositories.DefaultAlarmRepository
 import com.abstraktlabs.alarm.room.AlarmDao
 import com.abstraktlabs.alarm.room.AlarmEntity
-import com.abstraktlabs.alarm.utils.logInstance
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -31,7 +30,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
-import java.util.*
 
 @SmallTest
 @ExperimentalCoroutinesApi
@@ -70,12 +68,12 @@ class AlarmViewModelTest {
         repo = DefaultAlarmRepository(dao)
         viewModel = AlarmViewModel(repo, dispatcher)
         testContext =
-            ApplicationProvider.getApplicationContext() //InstrumentationRegistry.getInstrumentation().context
+            ApplicationProvider.getApplicationContext()
         alarmManager = testContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     }
 
     /**
-     * Checks the flow if empty.
+     * Checks if the flow is empty.
      */
     @Test
     fun checksAlarmsFlow() {
@@ -94,7 +92,7 @@ class AlarmViewModelTest {
     }
 
     /**
-     * Adds an alarm and checks flow.
+     * Adds an alarm and checks flow for the new AlarmEntity.
      */
     @Test
     fun addAlarmAndCheck() {
@@ -106,33 +104,100 @@ class AlarmViewModelTest {
             }
         }
 
+        // Check
         assertThat(flow).isEmpty()
-
 
         // Add
         scope.runBlockingTest {
             viewModel.addAlarm(AndroidTestData.alarm1, testContext, scope)
         }
+
+        // Check if added
+        val alarm = flow?.get(0)
+        assertThat(flow).isNotEmpty()
+        assertThat(alarm).isNotNull()
+        assertThat(alarm?.title).isEqualTo(AndroidTestData.alarm1.title)
+
+        job.cancel()
+    }
+
+    /**
+     * Add an alarm and delete.
+     */
+    @Test
+    fun addAndDeleteAnAlarm() {
+        var flow: List<AlarmEntity>? = null
+
+        val job = scope.launch {
+            viewModel.alarms.collect {
+                flow = it
+            }
+        }
+
+        // check
+        assertThat(flow).isEmpty()
+
+        // Add
+        scope.runBlockingTest {
+            viewModel.addAlarm(AndroidTestData.alarm1, testContext, scope)
+        }
+
+        // Check add
+        val alarm = flow?.get(0)
+        assertThat(flow).isNotEmpty()
+        assertThat(alarm).isNotNull()
+        assertThat(alarm?.title).isEqualTo(AndroidTestData.alarm1.title)
+
+        // Delete
+        scope.runBlockingTest {
+            viewModel.deleteAlarm(alarm!!, scope)
+        }
+
+        // Check delete
+        assertThat(flow).isNotNull()
+        assertThat(flow).isEmpty()
+
+        job.cancel()
+    }
+
+
+    /**
+     * Add an alarm and update.
+     */
+    @Test
+    fun addAndUpdateAnAlarm() {
+        var flow: List<AlarmEntity>? = null
+
+        val job = scope.launch {
+            viewModel.alarms.collect {
+                flow = it
+            }
+        }
+
+        // Check
+        assertThat(flow).isEmpty()
+
+        // Add
+        scope.runBlockingTest {
+            viewModel.addAlarm(AndroidTestData.alarm1, testContext, scope)
+        }
+
+        // Check add
         assertThat(flow).isNotEmpty()
         val alarm = flow?.get(0)
         assertThat(alarm).isNotNull()
         assertThat(alarm?.title).isEqualTo(AndroidTestData.alarm1.title)
 
-        // Alarm Check
-        val nextAlarm = alarmManager.nextAlarmClock // TODO check null issue
+        // Update
+        alarm?.title = "Changed"
+        scope.runBlockingTest {
+            viewModel.updateAlarm(alarm!!, scope)
+        }
 
-        // Getting the alarm time in millis by accessing the private
-        // function AlarmEntity.getAlarmCalendar() and setting it to accessible
-        // and casting the result to Calendar
-        val alarmTime = alarm!!.run {
-            this.javaClass.getDeclaredMethod("getAlarmCalendar").apply {
-                isAccessible = true
-            }.invoke(alarm) as Calendar
-        }.timeInMillis
+        // Check update
+        assertThat(flow?.get(0)?.title).isEqualTo("Changed")
 
-        assertThat(nextAlarm.triggerTime.also(::logInstance)).isEqualTo(alarmTime.also(::logInstance))
         job.cancel()
     }
-
 
 }
