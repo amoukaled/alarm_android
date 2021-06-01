@@ -91,4 +91,21 @@ class DefaultAlarmRepository @Inject constructor(private val dao: AlarmDao) : Al
         val dbAlarms = this.getAllAlarms()
         repoAlarms.emit(dbAlarms.toMutableList())
     }
+
+    /**
+     * Cancels all alarms and re-sets.
+     * If the alarm is snoozing it will be cancelled and
+     * set accordingly.
+     */
+    suspend fun cancelAlarmsAndSet(context: Context) {
+        val alarms = this.getAllAlarms()
+
+        for (alarm in alarms) {
+            if (alarm.isActive) {
+                alarm.cancelAlarm(context)
+                alarm.startAlarm(context)
+            }
+        }
+
+    }
 }
