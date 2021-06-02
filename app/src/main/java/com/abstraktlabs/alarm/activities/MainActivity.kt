@@ -30,6 +30,7 @@ import com.abstraktlabs.alarm.R
 import com.abstraktlabs.alarm.adapters.AlarmItemAdapter
 import com.abstraktlabs.alarm.databinding.ActivityMainBinding
 import com.abstraktlabs.alarm.fragments.AddAlarmFragment
+import com.abstraktlabs.alarm.fragments.ClockFragment
 import com.abstraktlabs.alarm.viewModels.AlarmViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +52,12 @@ class MainActivity : AppCompatActivity() {
         // View binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // FL
+        supportFragmentManager.beginTransaction().apply {
+            replace(binding.clockFL.id, ClockFragment())
+            commit()
+        }
 
         // Hint
         with(binding) {
