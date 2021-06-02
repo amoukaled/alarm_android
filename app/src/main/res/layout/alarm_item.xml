@@ -21,8 +21,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:padding="10dp"
-    android:background="@drawable/alarm_item_background">
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="10dp"
+    android:background="@drawable/alarm_item_background"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/alarmTimeTV"
