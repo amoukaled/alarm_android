@@ -35,6 +35,10 @@ class ClockFragment : Fragment() {
     private var binding: FragmentClockBinding? = null
     private lateinit var mainHandler: Handler
 
+    /**
+     * Runnable that updates the UI and
+     * delay one second before running again.
+     */
     private val updateTime = object : Runnable {
         override fun run() {
             updateUI()
@@ -53,41 +57,64 @@ class ClockFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Post the first update
         mainHandler.post(updateTime)
     }
 
+    // On pause, remove the callback.
     override fun onPause() {
         super.onPause()
         mainHandler.removeCallbacks(updateTime)
     }
 
+    // On resume, post the runnable.
     override fun onResume() {
         super.onResume()
         mainHandler.post(updateTime)
     }
 
+    // On destroy, remove the callback.
     override fun onDestroy() {
         super.onDestroy()
         binding = null
         mainHandler.removeCallbacks(updateTime)
     }
 
+    /**
+     * Updates the UI.
+     */
     private fun updateUI() {
         binding?.let {
             val calendar = Calendar.getInstance()
 
+            // Gets the hour of day (24Hour format)
+            //  12  = 100% -> 12 hours equals 100% of the circle
+            // this = x -> this = HourOfDay
+            // x = ((this - 12) * 100) / 12
+            // this - 12 to get the 12 hour equivalent
             it.hoursPB.progress = calendar.get(Calendar.HOUR_OF_DAY).run {
                 ((this - 12) * 100) / 12
             }
 
+            // Gets the minute
+            //  60  = 100% -> 60 minutes equals 100% of the circle
+            // this = x -> this = current minute
+            // x = (this * 100) / 60
             it.minutesPB.progress = calendar.get(Calendar.MINUTE).run {
                 (this * 100) / 60
             }
 
+
+            // Gets the second
+            //  60  = 100% -> 60 seconds equals 100% of the circle
+            // this = x -> this = current second
+            // x = (this * 100) / 60
             it.secondsPB.progress = calendar.get(Calendar.SECOND).run {
                 (this * 100) / 60
             }
 
+            // Updates the textview inside the clock
             it.clockTV.text = DateFormat.getTimeInstance(DateFormat.LONG).format(calendar.time)
         }
     }
