@@ -1,8 +1,6 @@
 package com.abstraktlabs.alarm.fragments
 
-import android.graphics.ColorFilter
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +29,6 @@ class ClockFragment : Fragment() {
                 isIndeterminate = false
                 max = 100
                 progress = 20
-                this.indeterminateDrawable.colorFilter = ColorFilter()
             }
 
             minutesPB.apply {
