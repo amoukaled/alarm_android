@@ -53,3 +53,12 @@ fun formatTimeToString(hour: Int, minute: Int): String {
 
     return DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.time)
 }
+
+/**
+ * Transforms the Integer to String and keeps the leading zero.
+ */
+fun Int.strictDoubleDigit(): String {
+    return this.let {
+        return@let if (it < 10) it.toString().padStart(2, '0') else it.toString()
+    }
+}

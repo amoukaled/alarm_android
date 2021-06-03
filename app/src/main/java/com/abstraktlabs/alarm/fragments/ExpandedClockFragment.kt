@@ -6,8 +6,11 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 
 import androidx.fragment.app.Fragment
+import com.abstraktlabs.alarm.R
 
 import com.abstraktlabs.alarm.databinding.FragmentExpandedClockBinding
 
@@ -103,6 +106,23 @@ class ExpandedClockFragment : Fragment() {
             it.minutesTV.text = calendar.get(Calendar.MINUTE).toString()
 
             it.secondsTV.text = calendar.get(Calendar.SECOND).toString()
+
+            it.clockFormatTV.apply {
+                android.text.format.DateFormat.is24HourFormat(context).let { result ->
+                    if (result) {
+                        this.isGone = true
+                    } else {
+                        this.isVisible = true
+                        calendar.get(Calendar.HOUR_OF_DAY).let { hourOfDay ->
+                            if (hourOfDay < 11) {
+                                this.text = context.resources.getString(R.string.am)
+                            } else {
+                                this.text = context.resources.getString(R.string.pm)
+                            }
+                        }
+                    }
+                }
+            }
 
         }
     }

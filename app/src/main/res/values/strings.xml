@@ -13,4 +13,6 @@
     <string name="snooze">Snooze</string>
     <string name="info">Info</string>
     <string name="hint">Press and hold to delete.</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
 </resources>
