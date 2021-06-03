@@ -6,9 +6,11 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
+
 import com.abstraktlabs.alarm.databinding.FragmentExpandedClockBinding
-import java.text.DateFormat
+
 import java.util.*
 
 class ExpandedClockFragment : Fragment() {
@@ -96,14 +98,37 @@ class ExpandedClockFragment : Fragment() {
             }
 
             // Updates the textview inside the clock // TODO FIX
-            it.hoursTV.text = calendar.get(Calendar.HOUR_OF_DAY).toString()
-            //DateFormat.getTimeInstance(DateFormat.HOUR_OF_DAY1_FIELD).format(calendar.time)
+            it.hoursTV.text = getHourString(calendar)
 
             it.minutesTV.text = calendar.get(Calendar.MINUTE).toString()
-            //DateFormat.getTimeInstance(DateFormat.MINUTE_FIELD).format(calendar.time)
 
             it.secondsTV.text = calendar.get(Calendar.SECOND).toString()
-            //DateFormat.getTimeInstance(DateFormat.SECOND_FIELD).format(calendar.time)
+
         }
     }
+
+    /**
+     * Checks the hour format and returns the appropriate
+     * hour string.
+     */
+    private fun getHourString(calendar: Calendar) =
+        android.text.format.DateFormat.is24HourFormat(context).run {
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            if (this) {
+                hour.toString()
+            } else {
+                when {
+                    hour == 0 -> {
+                        "12"
+                    }
+                    hour <= 12 -> {
+                        hour.toString()
+                    }
+                    else -> {
+                        val hourPrime = (hour - 12)
+                        hourPrime.toString()
+                    }
+                }
+            }
+        }
 }
