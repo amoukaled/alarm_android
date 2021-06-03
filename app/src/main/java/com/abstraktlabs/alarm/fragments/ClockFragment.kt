@@ -94,7 +94,8 @@ class ClockFragment : Fragment() {
             // x = ((this - 12) * 100) / 12
             // this - 12 to get the 12 hour equivalent
             it.hoursPB.progress = calendar.get(Calendar.HOUR_OF_DAY).run {
-                ((this - 12) * 100) / 12
+                val hour = if (this >= 12) (this - 12) else this
+                (hour * 100) / 12
             }
 
             // Gets the minute
@@ -104,7 +105,6 @@ class ClockFragment : Fragment() {
             it.minutesPB.progress = calendar.get(Calendar.MINUTE).run {
                 (this * 100) / 60
             }
-
 
             // Gets the second
             //  60  = 100% -> 60 seconds equals 100% of the circle
