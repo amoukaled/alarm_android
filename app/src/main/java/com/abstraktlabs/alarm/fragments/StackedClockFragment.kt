@@ -25,14 +25,14 @@ import android.view.ViewGroup
 
 import androidx.fragment.app.Fragment
 
-import com.abstraktlabs.alarm.databinding.FragmentClockBinding
+import com.abstraktlabs.alarm.databinding.FragmentStackedClockBinding
 
 import java.text.DateFormat
 import java.util.*
 
-class ClockFragment : Fragment() {
+class StackedClockFragment : Fragment() {
 
-    private var binding: FragmentClockBinding? = null
+    private var binding: FragmentStackedClockBinding? = null
     private lateinit var mainHandler: Handler
 
     /**
@@ -50,7 +50,7 @@ class ClockFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentClockBinding.inflate(layoutInflater)
+        binding = FragmentStackedClockBinding.inflate(layoutInflater)
         mainHandler = Handler(Looper.getMainLooper())
         return binding?.root
     }
