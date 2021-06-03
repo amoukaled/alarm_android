@@ -117,7 +117,7 @@ class ExpandedClockFragment : Fragment() {
                 (this * 100) / 60
             }
 
-            // Updates the textview inside the clock // TODO FIX
+            // Updates the textview inside the clock
             it.hoursTV.text = getHourString(calendar)
 
             it.minutesTV.text = calendar.get(Calendar.MINUTE).strictDoubleDigit()
