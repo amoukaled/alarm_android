@@ -178,4 +178,28 @@
     <color name="blue800">#1565c0</color>
     <color name="blue900">#0d47a1</color>
 
+    <!--  Orange  -->
+    <color name="orange50">#fff3e0</color>
+    <color name="orange100">#ffe0b2</color>
+    <color name="orange200">#ffcc80</color>
+    <color name="orange300">#ffb74d</color>
+    <color name="orange400">#ffa726</color>
+    <color name="orange500">#ff9800</color>
+    <color name="orange600">#fb8c00</color>
+    <color name="orange700">#f57c00</color>
+    <color name="orange800">#ef6c00</color>
+    <color name="orange900">#e65100</color>
+
+    <!--  Indigo  -->
+    <color name="indigo50">#e8eaf6</color>
+    <color name="indigo100">#c5cae9</color>
+    <color name="indigo200">#9fa8da</color>
+    <color name="indigo300">#7986cb</color>
+    <color name="indigo400">#5c6bc0</color>
+    <color name="indigo500">#3f51b5</color>
+    <color name="indigo600">#3949ab</color>
+    <color name="indigo700">#303f9f</color>
+    <color name="indigo800">#283593</color>
+    <color name="indigo900">#1a237e</color>
+
 </resources>

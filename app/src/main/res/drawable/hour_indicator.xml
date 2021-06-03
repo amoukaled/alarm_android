@@ -24,7 +24,7 @@
             android:thicknessRatio="15.0"
             android:type="sweep"
             android:useLevel="false">
-            <solid android:color="@color/green200" />
+            <solid android:color="@color/orange200" />
         </shape>
     </item>
     <item android:id="@android:id/progress">
@@ -39,7 +39,7 @@
                 android:shape="ring"
                 android:thicknessRatio="15.0"
                 android:type="sweep">
-                <solid android:color="@color/green500" />
+                <solid android:color="@color/orange500" />
             </shape>
         </rotate>
     </item>
