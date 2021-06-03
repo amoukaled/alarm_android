@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.abstraktlabs.alarm.R
 
 import com.abstraktlabs.alarm.databinding.FragmentExpandedClockBinding
+import com.abstraktlabs.alarm.utils.strictDoubleDigit
 
 import java.util.*
 
@@ -103,9 +104,9 @@ class ExpandedClockFragment : Fragment() {
             // Updates the textview inside the clock // TODO FIX
             it.hoursTV.text = getHourString(calendar)
 
-            it.minutesTV.text = calendar.get(Calendar.MINUTE).toString()
+            it.minutesTV.text = calendar.get(Calendar.MINUTE).strictDoubleDigit()
 
-            it.secondsTV.text = calendar.get(Calendar.SECOND).toString()
+            it.secondsTV.text = calendar.get(Calendar.SECOND).strictDoubleDigit()
 
             it.clockFormatTV.apply {
                 android.text.format.DateFormat.is24HourFormat(context).let { result ->
@@ -135,7 +136,7 @@ class ExpandedClockFragment : Fragment() {
         android.text.format.DateFormat.is24HourFormat(context).run {
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             if (this) {
-                hour.toString()
+                hour.strictDoubleDigit()
             } else {
                 when {
                     hour == 0 -> {

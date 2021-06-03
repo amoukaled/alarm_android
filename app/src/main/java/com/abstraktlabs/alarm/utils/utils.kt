@@ -55,7 +55,7 @@ fun formatTimeToString(hour: Int, minute: Int): String {
 }
 
 /**
- * Transforms the Integer to String and keeps the leading zero.
+ * Converts an Int to String and adds leading zeros.
  */
 fun Int.strictDoubleDigit(): String {
     return this.let {
