@@ -107,4 +107,9 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
             }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
+    }
 }
