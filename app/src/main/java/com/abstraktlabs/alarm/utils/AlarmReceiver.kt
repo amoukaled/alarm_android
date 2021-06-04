@@ -32,10 +32,10 @@ class AlarmReceiver : BroadcastReceiver() {
         if (context != null && intent != null) {
 
             intent.extras?.also {
-                val alarmTitle = it[Constants.alarmTitle] as String?
-                val alarmId = it[Constants.alarmId] as Long?
-                val alarmHour = it[Constants.alarmHour] as Int?
-                val alarmMinute = it[Constants.alarmMinute] as Int?
+                val alarmTitle = it[Constants.ALARM_TITLE] as String?
+                val alarmId = it[Constants.ALARM_ID] as Long?
+                val alarmHour = it[Constants.ALARM_HOUR] as Int?
+                val alarmMinute = it[Constants.ALARM_MINUTE] as Int?
 
                 if (alarmTitle != null && alarmId != null && alarmHour != null && alarmMinute != null) {
                     val alarmTime = formatTimeToString(alarmHour, alarmMinute)

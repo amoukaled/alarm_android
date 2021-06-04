@@ -14,19 +14,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.abstraktlabs.alarm.utils
+package com.abstraktlabs.alarm.models
 
-/**
- * Constant string keys used in intent extras.
- */
-object Constants {
-    const val ALARM_ID = "alarmId"
-    const val ALARM_TITLE = "alarmTitle"
-    const val ALARM_HOUR = "alarmHour"
-    const val ALARM_MINUTE = "alarmMinute"
-    const val NOTIFICATION_TASK = "notificationTask"
-    const val CLOCK_FACE = "clockFace"
-    const val SETTINGS_PREF = "settingsPref"
-    const val STACKED_CLOCK_FACE = "stackedClockFace"
-    const val EXPANDED_CLOCK_FACE = "expandedClockFace"
+import com.abstraktlabs.alarm.utils.Constants
+
+enum class ClockFace {
+    Stacked,
+    Expanded;
+
+    companion object {
+        fun from(value: String?): ClockFace {
+            return when (value) {
+                Constants.STACKED_CLOCK_FACE -> {
+                    Stacked
+                }
+                Constants.EXPANDED_CLOCK_FACE -> {
+                    Expanded
+                }
+                else -> {
+                    Stacked
+                }
+            }
+        }
+    }
 }
+

@@ -68,14 +68,14 @@ object NotificationHelper {
 
         // On notification click
         val clickIntent = Intent(context, AlarmSetOffActivity::class.java).apply {
-            putExtra(Constants.alarmId, alarmId)
+            putExtra(Constants.ALARM_ID, alarmId)
         }
         val clickPendingIntent = PendingIntent.getActivity(context, alarmId.toInt(), clickIntent, 0)
 
         // On notification cancel
         val cancelIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(Constants.alarmId, alarmId)
-            putExtra(Constants.notificationTask, NotificationTask.CANCEL)
+            putExtra(Constants.ALARM_ID, alarmId)
+            putExtra(Constants.NOTIFICATION_TASK, NotificationTask.CANCEL)
         }
         val cancelPendingIntent = PendingIntent.getBroadcast(
             context,
@@ -86,8 +86,8 @@ object NotificationHelper {
 
         // On notification Snooze
         val snoozeIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(Constants.alarmId, alarmId)
-            putExtra(Constants.notificationTask, NotificationTask.SNOOZE)
+            putExtra(Constants.ALARM_ID, alarmId)
+            putExtra(Constants.NOTIFICATION_TASK, NotificationTask.SNOOZE)
         }
         val snoozePendingIntent = PendingIntent.getBroadcast(
             context,

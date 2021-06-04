@@ -15,4 +15,7 @@
     <string name="hint">Press and hold to delete.</string>
     <string name="am">AM</string>
     <string name="pm">PM</string>
+    <string name="change_clock">Change clock</string>
+    <string name="stacked">Stacked</string>
+    <string name="expanded">Expanded</string>
 </resources>

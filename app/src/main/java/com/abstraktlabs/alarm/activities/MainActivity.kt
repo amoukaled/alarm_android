@@ -30,8 +30,10 @@ import com.abstraktlabs.alarm.R
 import com.abstraktlabs.alarm.adapters.AlarmItemAdapter
 import com.abstraktlabs.alarm.databinding.ActivityMainBinding
 import com.abstraktlabs.alarm.fragments.AddAlarmFragment
+import com.abstraktlabs.alarm.fragments.ChangeClockFragment
 import com.abstraktlabs.alarm.fragments.ExpandedClockFragment
 import com.abstraktlabs.alarm.fragments.StackedClockFragment
+import com.abstraktlabs.alarm.models.ClockFace
 import com.abstraktlabs.alarm.viewModels.AlarmViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,14 +56,111 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // FL
-        supportFragmentManager.beginTransaction().apply {
-//            replace(binding.clockFL.id, StackedClockFragment())
-            replace(binding.clockFL.id, ExpandedClockFragment())
-            commit()
-        }
+        // Change clock face callback
+        changeClockInit()
 
         // Hint
+        initHint()
+
+        // New alarm callback
+        newAlarmInit()
+
+        val model: AlarmViewModel by viewModels()
+
+        // Clock Frame Layout
+        clockFLInit(model)
+
+        // Recycler View adapter
+        alarmsRVInit(model)
+
+        // Stateflow
+        stateFlowCollect(model)
+    }
+
+    /**
+     * Starts collecting stateFlow events and updates the UI.
+     */
+    private fun stateFlowCollect(model: AlarmViewModel) {
+        lifecycleScope.launchWhenCreated {
+            model.alarms.collect { alarms ->
+                val placeholder = if (alarms.size == 1) {
+                    resources.getString(R.string.alarm, "1")
+                } else {
+                    val arg = alarms.size.toString()
+                    resources.getString(R.string.alarms, arg)
+                }
+                binding.alarmCountTV.text = placeholder
+                alarmsAdapter.updateItemsAndNotify(alarms)
+            }
+        }
+    }
+
+    /**
+     * Initializes the AlarmAdapter and the AlarmsRecyclerView.
+     * Called before any access to the adapter.
+     */
+    private fun alarmsRVInit(model: AlarmViewModel) {
+        alarmsAdapter = AlarmItemAdapter(model.alarms.value, model)
+        with(binding.alarmsRV) {
+            adapter = alarmsAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+    }
+
+    /**
+     * Initializes the Clock FrameLayout and collects
+     * stateFlow events.
+     */
+    private fun clockFLInit(model: AlarmViewModel) {
+        lifecycleScope.launchWhenStarted {
+            model.clockFace.collect { clock ->
+
+                when (clock) {
+                    ClockFace.Stacked -> {
+                        supportFragmentManager.beginTransaction().apply {
+                            replace(binding.clockFL.id, StackedClockFragment())
+                            commit()
+                        }
+                    }
+
+                    ClockFace.Expanded -> {
+                        supportFragmentManager.beginTransaction().apply {
+                            replace(binding.clockFL.id, ExpandedClockFragment())
+                            commit()
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     * Initialized the ChangeClockButton to display a bottom
+     * dialog.
+     */
+    private fun changeClockInit() {
+        binding.changeClockButton.setOnClickListener {
+            val dialog = ChangeClockFragment()
+            dialog.show(supportFragmentManager, "changeClock")
+        }
+    }
+
+    /**
+     * Initializes the New Alarm Button to display a bottom
+     * dialog.
+     */
+    private fun newAlarmInit() {
+        binding.newAlarm.setOnClickListener {
+            val dialog = AddAlarmFragment()
+            dialog.show(supportFragmentManager, "addAlarm")
+        }
+    }
+
+    /**
+     * Initializes the hint ImageButton.
+     */
+    private fun initHint() {
         with(binding) {
             infoTV.isGone = true
 
@@ -81,35 +180,6 @@ class MainActivity : AppCompatActivity() {
                         isGone = true
                     }
                 }
-            }
-        }
-
-        // New alarm callback
-        binding.newAlarm.setOnClickListener {
-            val dialog = AddAlarmFragment()
-            dialog.show(supportFragmentManager, "addAlarm")
-        }
-
-        val model: AlarmViewModel by viewModels()
-
-        // Recycler View adapter
-        alarmsAdapter = AlarmItemAdapter(model.alarms.value, model)
-        with(binding.alarmsRV) {
-            adapter = alarmsAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-        }
-
-        // Stateflow
-        lifecycleScope.launchWhenCreated {
-            model.alarms.collect { alarms ->
-                val placeholder = if (alarms.size == 1) {
-                    resources.getString(R.string.alarm, "1")
-                } else {
-                    val arg = alarms.size.toString()
-                    resources.getString(R.string.alarms, arg)
-                }
-                binding.alarmCountTV.text = placeholder
-                alarmsAdapter.updateItemsAndNotify(alarms)
             }
         }
     }

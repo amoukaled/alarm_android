@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    * Copyright (C) 2021  Ali Moukaled
+    *
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU General Public License as published by
+    * the Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey300"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/change_clock"
+        android:textColor="@color/deepOrange500"
+        android:textSize="22sp" />
+
+
+    <RadioGroup
+        android:id="@+id/clocksRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/stackedRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/stacked" />
+
+        <RadioButton
+            android:id="@+id/expandedRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/expanded" />
+
+    </RadioGroup>
+
+</LinearLayout>

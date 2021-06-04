@@ -16,35 +16,52 @@
 
 package com.abstraktlabs.alarm.viewModels
 
+
+import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModel
+import android.content.SharedPreferences
+
+import androidx.core.content.edit
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 
+import com.abstraktlabs.alarm.models.ClockFace
 import com.abstraktlabs.alarm.models.DispatcherProvider
 import com.abstraktlabs.alarm.repositories.DefaultAlarmRepository
 import com.abstraktlabs.alarm.room.AlarmEntity
+import com.abstraktlabs.alarm.utils.Constants
+import com.abstraktlabs.alarm.utils.logInstance
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 import javax.inject.Inject
 
+// TODO Check AndroidViewModel
+// TODO Check sharedPrefListener issue
+// TODO write documentation
+
 @HiltViewModel
 class AlarmViewModel @Inject constructor(
     private val repo: DefaultAlarmRepository,
-    private val dispatchers: DispatcherProvider
-) : ViewModel() {
+    private val dispatchers: DispatcherProvider, application: Application
+) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch(dispatchers.io) {
             repo.updateAlarms()
         }
+
+        getSharedPref().registerOnSharedPreferenceChangeListener(this@AlarmViewModel::listener.get())
     }
 
     val alarms: StateFlow<MutableList<AlarmEntity>> = repo.repoAlarms
+
+    // Alarm
 
     /**
      * Adds and starts the alarm.
@@ -87,4 +104,51 @@ class AlarmViewModel @Inject constructor(
     }
 
 
+    // Clock
+
+    private val _clockFace = MutableStateFlow(ClockFace.Stacked)
+    val clockFace: StateFlow<ClockFace> = _clockFace
+
+    fun changeClockFace(value: ClockFace) {
+
+        val clock = value.run {
+            when (this) {
+                ClockFace.Expanded -> {
+                    Constants.EXPANDED_CLOCK_FACE
+                }
+
+                ClockFace.Stacked -> {
+                    Constants.STACKED_CLOCK_FACE
+                }
+            }
+        }
+
+        getSharedPref().edit {
+            putString(Constants.CLOCK_FACE, clock)
+            apply()
+        }
+    }
+
+
+    private fun getSharedPref(): SharedPreferences {
+        return getApplication<Application>().getSharedPreferences(
+            Constants.SETTINGS_PREF,
+            Context.MODE_PRIVATE
+        )
+    }
+
+    private val listener =
+        SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, _ ->
+            sharedPreferences.also(::logInstance)
+            val saved = sharedPreferences.getString(Constants.CLOCK_FACE, null)
+
+            val value = ClockFace.from(saved)
+
+            this._clockFace.value = value
+        }
+
+    override fun onCleared() {
+        super.onCleared()
+        getSharedPref().unregisterOnSharedPreferenceChangeListener(this@AlarmViewModel::listener.get())
+    }
 }

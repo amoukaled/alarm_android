@@ -56,8 +56,8 @@ class NotificationReceiver :
         if (context != null && intent != null) {
 
             intent.extras?.also { extras ->
-                (extras[Constants.notificationTask] as NotificationTask?)?.let { task ->
-                    (extras[Constants.alarmId] as Long?)?.let { id ->
+                (extras[Constants.NOTIFICATION_TASK] as NotificationTask?)?.let { task ->
+                    (extras[Constants.ALARM_ID] as Long?)?.let { id ->
                         val manager = NotificationManagerCompat.from(context)
 
                         when (task) {

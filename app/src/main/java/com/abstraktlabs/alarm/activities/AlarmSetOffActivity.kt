@@ -50,7 +50,7 @@ class AlarmSetOffActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Getting the alarm id and setting onclick listeners.
-        (intent.extras?.get(Constants.alarmId) as Long?)?.let { id ->
+        (intent.extras?.get(Constants.ALARM_ID) as Long?)?.let { id ->
             lifecycleScope.launch(dispatchers.io) {
 
                 repository.getAlarmById(id)?.let { alarm ->

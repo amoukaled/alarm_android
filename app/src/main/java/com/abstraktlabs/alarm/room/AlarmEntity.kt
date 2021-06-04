@@ -73,10 +73,10 @@ data class AlarmEntity(
     private fun getPendingIntent(context: Context): PendingIntent {
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra(Constants.alarmTitle, this@AlarmEntity.title)
-            putExtra(Constants.alarmId, this@AlarmEntity.id)
-            putExtra(Constants.alarmHour, this@AlarmEntity.hour)
-            putExtra(Constants.alarmMinute, this@AlarmEntity.minute)
+            putExtra(Constants.ALARM_TITLE, this@AlarmEntity.title)
+            putExtra(Constants.ALARM_ID, this@AlarmEntity.id)
+            putExtra(Constants.ALARM_HOUR, this@AlarmEntity.hour)
+            putExtra(Constants.ALARM_MINUTE, this@AlarmEntity.minute)
         }
         return PendingIntent.getBroadcast(context, this@AlarmEntity.id.toInt(), intent, 0)
     }
