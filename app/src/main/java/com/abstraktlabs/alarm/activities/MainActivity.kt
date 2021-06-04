@@ -16,6 +16,7 @@
 
 package com.abstraktlabs.alarm.activities
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 
@@ -34,6 +35,7 @@ import com.abstraktlabs.alarm.fragments.ChangeClockFragment
 import com.abstraktlabs.alarm.fragments.ExpandedClockFragment
 import com.abstraktlabs.alarm.fragments.StackedClockFragment
 import com.abstraktlabs.alarm.models.ClockFace
+import com.abstraktlabs.alarm.utils.SharedPreferencesHelper
 import com.abstraktlabs.alarm.viewModels.AlarmViewModel
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,6 +51,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var alarmsAdapter: AlarmItemAdapter
 
+
+    private val listener =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+            clockFLInit()
+        }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,24 +65,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Change clock face callback
+        // TODO remove on pause destroy adn resume on reusme
+        SharedPreferencesHelper.getSharedPref(this)
+            .registerOnSharedPreferenceChangeListener(this@MainActivity::listener.get())
+
         changeClockInit()
-
-        // Hint
         initHint()
-
-        // New alarm callback
         newAlarmInit()
 
         val model: AlarmViewModel by viewModels()
-
-        // Clock Frame Layout
-        clockFLInit(model)
-
-        // Recycler View adapter
+        clockFLInit()
         alarmsRVInit(model)
-
-        // Stateflow
         stateFlowCollect(model)
     }
 
@@ -111,28 +113,26 @@ class MainActivity : AppCompatActivity() {
      * Initializes the Clock FrameLayout and collects
      * stateFlow events.
      */
-    private fun clockFLInit(model: AlarmViewModel) {
-        lifecycleScope.launchWhenStarted {
-            model.clockFace.collect { clock ->
+    private fun clockFLInit() {
 
-                when (clock) {
-                    ClockFace.Stacked -> {
-                        supportFragmentManager.beginTransaction().apply {
-                            replace(binding.clockFL.id, StackedClockFragment())
-                            commit()
-                        }
-                    }
-
-                    ClockFace.Expanded -> {
-                        supportFragmentManager.beginTransaction().apply {
-                            replace(binding.clockFL.id, ExpandedClockFragment())
-                            commit()
-                        }
-                    }
-
+        when (SharedPreferencesHelper.getClockFace(this)) {
+            ClockFace.Stacked -> {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(binding.clockFL.id, StackedClockFragment())
+                    commit()
                 }
             }
+
+            ClockFace.Expanded -> {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(binding.clockFL.id, ExpandedClockFragment())
+                    commit()
+                }
+            }
+
         }
+
+
     }
 
     /**

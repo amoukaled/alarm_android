@@ -22,12 +22,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 
 import com.abstraktlabs.alarm.R
 import com.abstraktlabs.alarm.databinding.FragmentChangeClockBinding
 import com.abstraktlabs.alarm.models.ClockFace
-import com.abstraktlabs.alarm.viewModels.AlarmViewModel
+import com.abstraktlabs.alarm.utils.SharedPreferencesHelper
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class ChangeClockFragment : BottomSheetDialogFragment() {
@@ -52,30 +52,33 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel: AlarmViewModel by activityViewModels()
 
-        initializeRadioButtons(viewModel)
 
-        radioGroupCallback(viewModel)
+        initializeRadioButtons()
+
+        radioGroupCallback()
     }
 
     /**
      * Adds a callback to the RadioGroup.
      * Updates the SharedPref and dismiss.
      */
-    private fun radioGroupCallback(viewModel: AlarmViewModel) {
+    private fun radioGroupCallback() {
         binding?.apply {
             clocksRG.setOnCheckedChangeListener { _, checkedId ->
 
                 when (checkedId) {
 
                     expandedRB.id -> {
-                        viewModel.changeClockFace(ClockFace.Expanded)
+                        SharedPreferencesHelper.changeClockFace(
+                            ClockFace.Expanded,
+                            requireContext()
+                        )
                         this@ChangeClockFragment.dismiss()
                     }
 
                     stackedRB.id -> {
-                        viewModel.changeClockFace(ClockFace.Stacked)
+                        SharedPreferencesHelper.changeClockFace(ClockFace.Stacked, requireContext())
                         this@ChangeClockFragment.dismiss()
 
                     }
@@ -93,25 +96,25 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
     /**
      * Initializes the radio buttons depending on selected clockFace.
      */
-    private fun initializeRadioButtons(viewModel: AlarmViewModel) {
-        viewModel.clockFace.value.let {
-            when (it) {
+    private fun initializeRadioButtons() {
 
-                ClockFace.Stacked -> {
-                    binding?.apply {
-                        stackedRB.isChecked = true
-                        expandedRB.isChecked = false
-                    }
+        when (SharedPreferencesHelper.getClockFace(requireContext())) {
+
+            ClockFace.Stacked -> {
+                binding?.apply {
+                    stackedRB.isChecked = true
+                    expandedRB.isChecked = false
                 }
-
-                ClockFace.Expanded -> {
-                    binding?.apply {
-                        stackedRB.isChecked = false
-                        expandedRB.isChecked = true
-                    }
-                }
-
             }
+
+            ClockFace.Expanded -> {
+                binding?.apply {
+                    stackedRB.isChecked = false
+                    expandedRB.isChecked = true
+                }
+            }
+
+
         }
     }
 
