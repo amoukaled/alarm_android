@@ -30,7 +30,6 @@ import com.abstraktlabs.alarm.models.DispatcherProvider
 import com.abstraktlabs.alarm.repositories.DefaultAlarmRepository
 import com.abstraktlabs.alarm.room.AlarmEntity
 import com.abstraktlabs.alarm.utils.Constants
-import com.abstraktlabs.alarm.utils.logInstance
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 
@@ -129,6 +128,9 @@ class AlarmViewModel @Inject constructor(
         }
     }
 
+    private fun getClockFace(sharedPreferences: SharedPreferences = getSharedPref()): ClockFace =
+        ClockFace.from(sharedPreferences.getString(Constants.CLOCK_FACE, null))
+
 
     private fun getSharedPref(): SharedPreferences {
         return getApplication<Application>().getSharedPreferences(
@@ -139,10 +141,7 @@ class AlarmViewModel @Inject constructor(
 
     private val listener =
         SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, _ ->
-            sharedPreferences.also(::logInstance)
-            val saved = sharedPreferences.getString(Constants.CLOCK_FACE, null)
-
-            val value = ClockFace.from(saved)
+            val value = getClockFace(sharedPreferences)
 
             this._clockFace.value = value
         }
