@@ -51,12 +51,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var alarmsAdapter: AlarmItemAdapter
 
-
     private val listener =
         SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
             clockFLInit()
         }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // TODO remove on pause destroy adn resume on reusme
+        // Registering the change listener
         SharedPreferencesHelper.getSharedPref(this)
             .registerOnSharedPreferenceChangeListener(this@MainActivity::listener.get())
 
@@ -110,11 +108,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Initializes the Clock FrameLayout and collects
-     * stateFlow events.
+     * Initializes the Clock FrameLayout.
      */
     private fun clockFLInit() {
-
         when (SharedPreferencesHelper.getClockFace(this)) {
             ClockFace.Stacked -> {
                 supportFragmentManager.beginTransaction().apply {
@@ -131,8 +127,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
-
     }
 
     /**
@@ -188,6 +182,20 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         val model: AlarmViewModel by viewModels()
         model.refresh()
+        SharedPreferencesHelper.getSharedPref(this)
+            .registerOnSharedPreferenceChangeListener(this@MainActivity::listener.get())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        SharedPreferencesHelper.getSharedPref(this)
+            .unregisterOnSharedPreferenceChangeListener(this@MainActivity::listener.get())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        SharedPreferencesHelper.getSharedPref(this)
+            .unregisterOnSharedPreferenceChangeListener(this@MainActivity::listener.get())
     }
 
 }

@@ -33,7 +33,6 @@ import kotlinx.coroutines.launch
 
 import javax.inject.Inject
 
-
 @HiltViewModel
 class AlarmViewModel @Inject constructor(
     private val repo: DefaultAlarmRepository,
@@ -47,7 +46,6 @@ class AlarmViewModel @Inject constructor(
     }
 
     val alarms: StateFlow<MutableList<AlarmEntity>> = repo.repoAlarms
-
 
     /**
      * Adds and starts the alarm.

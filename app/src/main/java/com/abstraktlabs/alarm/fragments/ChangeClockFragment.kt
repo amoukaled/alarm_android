@@ -52,10 +52,7 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         initializeRadioButtons()
-
         radioGroupCallback()
     }
 
@@ -68,7 +65,6 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
             clocksRG.setOnCheckedChangeListener { _, checkedId ->
 
                 when (checkedId) {
-
                     expandedRB.id -> {
                         SharedPreferencesHelper.changeClockFace(
                             ClockFace.Expanded,
@@ -86,9 +82,7 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
                     else -> {
                         this@ChangeClockFragment.dismiss()
                     }
-
                 }
-
             }
         }
     }
@@ -99,24 +93,18 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
     private fun initializeRadioButtons() {
 
         when (SharedPreferencesHelper.getClockFace(requireContext())) {
-
             ClockFace.Stacked -> {
                 binding?.apply {
                     stackedRB.isChecked = true
                     expandedRB.isChecked = false
                 }
             }
-
             ClockFace.Expanded -> {
                 binding?.apply {
                     stackedRB.isChecked = false
                     expandedRB.isChecked = true
                 }
             }
-
-
         }
     }
-
-
 }
