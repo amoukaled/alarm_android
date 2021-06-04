@@ -23,8 +23,6 @@
     android:gravity="center"
     android:orientation="horizontal">
 
-    <!-- TODO change text colors -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,6 +48,8 @@
             android:layout_height="70dp"
             android:background="@drawable/clock_middle_part"
             android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +82,8 @@
             android:layout_height="70dp"
             android:background="@drawable/clock_middle_part"
             android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,6 +116,8 @@
             android:layout_height="70dp"
             android:background="@drawable/clock_middle_part"
             android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +131,7 @@
         android:layout_height="50dp"
         android:background="@drawable/clock_middle_part"
         android:gravity="center"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
