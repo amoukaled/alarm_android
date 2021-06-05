@@ -150,7 +150,7 @@ class AlarmViewModelTest {
 
         // Delete
         scope.runBlockingTest {
-            viewModel.deleteAlarm(alarm!!, scope)
+            viewModel.deleteAlarm(alarm!!, null, scope)
         }
 
         // Check delete

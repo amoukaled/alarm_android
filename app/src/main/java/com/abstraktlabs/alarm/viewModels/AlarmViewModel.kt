@@ -30,6 +30,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import javax.inject.Inject
 
@@ -63,9 +64,22 @@ class AlarmViewModel @Inject constructor(
     /**
      * Deletes the alarm.
      */
-    fun deleteAlarm(alarmEntity: AlarmEntity, scope: CoroutineScope = viewModelScope) {
+    fun deleteAlarm(
+        alarmEntity: AlarmEntity,
+        callback: (() -> Unit)?, scope: CoroutineScope = viewModelScope
+    ) {
+        // Deletes the alarm and fires the callback if not null.
+        // Callback is set in the adapter to notify
+        // the adapter when the animation finishes.
+
         scope.launch(dispatchers.io) {
             repo.deleteAlarm(alarmEntity)
+
+            callback?.let {
+                withContext(dispatchers.main) {
+                    it.invoke()
+                }
+            }
         }
     }
 

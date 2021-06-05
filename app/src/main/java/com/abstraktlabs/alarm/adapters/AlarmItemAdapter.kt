@@ -20,6 +20,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 
 import androidx.recyclerview.widget.RecyclerView
@@ -52,13 +53,19 @@ class AlarmItemAdapter(val alarms: MutableList<AlarmEntity>, private val model: 
 
     override fun getItemCount(): Int = alarms.size
 
-    // Callbacks
+    /**
+     * Updates the items and notifies the adapter.
+     */
     fun updateItemsAndNotify(newAlarms: MutableList<AlarmEntity>) {
         this.alarms.clear()
         this.alarms.addAll(newAlarms)
         this.notifyDataSetChanged()
     }
 
+    /**
+     * Toggles the alarm from on to off and viceversa.
+     * Starts and cancels the alarm accordingly.
+     */
     private fun toggleAlarm(position: Int, value: Boolean, context: Context) {
         val alarm = alarms[position]
         alarm.isActive = value
@@ -78,14 +85,34 @@ class AlarmItemAdapter(val alarms: MutableList<AlarmEntity>, private val model: 
         }
     }
 
+    /**
+     * Deletes the alarm and updates the adapter.
+     */
     private fun deleteAlarm(position: Int, context: Context, view: View) {
+
+        // Gets the animation and set a listener to delete and notify adapter
+        // after the animation is done.
+        // Notifying is done in the viewModel using the viewModelScope and switching
+        // to the main thread to update the UI.
+
         val animation = AnimationUtils.loadAnimation(context, R.anim.slide_out)
-        animation.duration = 400
+        animation.apply {
+            duration = 400
+            setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation?) = Unit
+
+                override fun onAnimationEnd(animation: Animation?) {
+                    val alarm = alarms[position]
+                    alarm.cancelAlarm(context)
+                    model?.deleteAlarm(alarm, {
+                        notifyItemChanged(position)
+                    })
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) = Unit
+            })
+        }
         view.startAnimation(animation)
-        val alarm = alarms[position]
-        alarm.cancelAlarm(context)
-        model?.deleteAlarm(alarm)
-        notifyItemChanged(position)
     }
 
     class AlarmViewHolder(private val binding: AlarmItemBinding, val context: Context) :
