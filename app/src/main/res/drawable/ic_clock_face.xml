@@ -1,0 +1,106 @@
+<!--
+    * Copyright (C) 2021  Ali Moukaled
+    *
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU General Public License as published by
+    * the Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="140dp"
+    android:height="140.00002dp"
+    android:viewportWidth="140"
+    android:viewportHeight="140.00002">
+  <path
+      android:pathData="M70,-0L70,70L140,70A70,70 45,0 0,70 -0Z"
+      android:strokeWidth="8.42407"
+      android:fillColor="#e6e6e6"
+      android:fillAlpha="0.972781"/>
+  <path
+      android:pathData="m70,2.357l1.367,0l0,12.702l-1.367,0z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m137.641,68.633l-0,1.367l-12.702,0l-0,-1.367z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m127.995,35.067 l-11,6.351 0.684,1.184 0.684,1.184 11,-6.351 -0.684,-1.184z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m102.711,10.678 l-6.351,11 1.184,0.684 1.184,0.684 6.351,-11 -1.184,-0.684z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="M70,140L70,70L140,70A70,70 135,0 1,70 140Z"
+      android:strokeWidth="8.42407"
+      android:fillColor="#e6e6e6"
+      android:fillAlpha="0.972781"/>
+  <path
+      android:pathData="m70,137.643l1.367,-0l0,-12.702l-1.367,-0z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m137.641,71.367l-0,-1.367l-12.702,-0l-0,1.367z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m127.995,104.933 l-11,-6.351 0.684,-1.184 0.684,-1.184 11,6.351 -0.684,1.184z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m102.711,129.322 l-6.351,-11 1.184,-0.684 1.184,-0.684 6.351,11 -1.184,0.684z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="M70,-0L70,70L0,70A70,70 0,0 1,70 -0Z"
+      android:strokeWidth="8.42407"
+      android:fillColor="#e6e6e6"
+      android:fillAlpha="0.972781"/>
+  <path
+      android:pathData="m70,2.357l-1.367,0l-0,12.702l1.367,0z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m2.359,68.633l0,1.367l12.702,0l0,-1.367z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m12.005,35.067 l11,6.351 -0.684,1.184 -0.684,1.184 -11,-6.351 0.684,-1.184z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m37.289,10.678 l6.351,11 -1.184,0.684 -1.184,0.684 -6.351,-11 1.184,-0.684z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="M70,140L70,70L0,70A70,70 0,0 0,70 140Z"
+      android:strokeWidth="8.42407"
+      android:fillColor="#e6e6e6"
+      android:fillAlpha="0.972781"/>
+  <path
+      android:pathData="m70,137.643l-1.367,-0l-0,-12.702l1.367,-0z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m2.359,71.367l0,-1.367l12.702,-0l0,1.367z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m12.005,104.933 l11,-6.351 -0.684,-1.184 -0.684,-1.184 -11,6.351 0.684,1.184z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m37.289,129.322 l6.351,-11 -1.184,-0.684 -1.184,-0.684 -6.351,11 1.184,0.684z"
+      android:strokeWidth="1.2531"
+      android:fillColor="#808080"/>
+</vector>

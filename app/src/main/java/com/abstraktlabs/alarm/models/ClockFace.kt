@@ -20,7 +20,8 @@ import com.abstraktlabs.alarm.utils.Constants
 
 enum class ClockFace {
     Stacked,
-    Expanded;
+    Expanded,
+    Classic;
 
     companion object {
         fun from(value: String?): ClockFace {
@@ -30,6 +31,9 @@ enum class ClockFace {
                 }
                 Constants.EXPANDED_CLOCK_FACE -> {
                     Expanded
+                }
+                Constants.CLASSIC_CLOCK_FACE -> {
+                    Classic
                 }
                 else -> {
                     Stacked

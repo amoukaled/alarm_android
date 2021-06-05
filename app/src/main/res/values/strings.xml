@@ -18,4 +18,6 @@
     <string name="change_clock">Change clock</string>
     <string name="stacked">Stacked</string>
     <string name="expanded">Expanded</string>
+    <string name="clock">clock</string>
+    <string name="classic">Classic</string>
 </resources>

@@ -30,10 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abstraktlabs.alarm.R
 import com.abstraktlabs.alarm.adapters.AlarmItemAdapter
 import com.abstraktlabs.alarm.databinding.ActivityMainBinding
-import com.abstraktlabs.alarm.fragments.AddAlarmFragment
-import com.abstraktlabs.alarm.fragments.ChangeClockFragment
-import com.abstraktlabs.alarm.fragments.ExpandedClockFragment
-import com.abstraktlabs.alarm.fragments.StackedClockFragment
+import com.abstraktlabs.alarm.fragments.*
 import com.abstraktlabs.alarm.models.ClockFace
 import com.abstraktlabs.alarm.utils.SharedPreferencesHelper
 import com.abstraktlabs.alarm.viewModels.AlarmViewModel
@@ -111,21 +108,21 @@ class MainActivity : AppCompatActivity() {
      * Initializes the Clock FrameLayout.
      */
     private fun clockFLInit() {
-        when (SharedPreferencesHelper.getClockFace(this)) {
-            ClockFace.Stacked -> {
-                supportFragmentManager.beginTransaction().apply {
+        supportFragmentManager.beginTransaction().apply {
+            when(SharedPreferencesHelper.getClockFace(this@MainActivity)){
+                ClockFace.Stacked -> {
                     replace(binding.clockFL.id, StackedClockFragment())
                     commit()
                 }
-            }
-
-            ClockFace.Expanded -> {
-                supportFragmentManager.beginTransaction().apply {
+                ClockFace.Expanded -> {
                     replace(binding.clockFL.id, ExpandedClockFragment())
                     commit()
                 }
+                ClockFace.Classic -> {
+                    replace(binding.clockFL.id, ClassicClockFragment())
+                    commit()
+                }
             }
-
         }
     }
 

@@ -64,6 +64,18 @@
             android:text="@string/expanded"
             android:textSize="18sp" />
 
+        <RadioButton
+            android:id="@+id/classicRB"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/change_clock_item_background"
+            android:buttonTint="@color/deepOrange500"
+            android:paddingVertical="12dp"
+            android:text="@string/classic"
+            android:textSize="18sp" />
+
     </RadioGroup>
 
 </LinearLayout>

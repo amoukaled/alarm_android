@@ -37,6 +37,10 @@ object SharedPreferencesHelper {
                 ClockFace.Stacked -> {
                     Constants.STACKED_CLOCK_FACE
                 }
+
+                ClockFace.Classic -> {
+                    Constants.CLASSIC_CLOCK_FACE
+                }
             }
         }
 

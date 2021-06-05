@@ -79,6 +79,11 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
 
                     }
 
+                    classicRB.id -> {
+                        SharedPreferencesHelper.changeClockFace(ClockFace.Classic, requireContext())
+                        this@ChangeClockFragment.dismiss()
+                    }
+
                     else -> {
                         this@ChangeClockFragment.dismiss()
                     }
@@ -97,12 +102,21 @@ class ChangeClockFragment : BottomSheetDialogFragment() {
                 binding?.apply {
                     stackedRB.isChecked = true
                     expandedRB.isChecked = false
+                    classicRB.isChecked = false
                 }
             }
             ClockFace.Expanded -> {
                 binding?.apply {
                     stackedRB.isChecked = false
                     expandedRB.isChecked = true
+                    classicRB.isChecked = false
+                }
+            }
+            ClockFace.Classic -> {
+                binding?.apply {
+                    stackedRB.isChecked = false
+                    expandedRB.isChecked = false
+                    classicRB.isChecked = true
                 }
             }
         }

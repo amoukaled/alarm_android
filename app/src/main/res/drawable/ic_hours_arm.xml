@@ -1,0 +1,35 @@
+<!--
+    * Copyright (C) 2021  Ali Moukaled
+    *
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU General Public License as published by
+    * the Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="140dp"
+    android:height="140dp"
+    android:viewportWidth="140"
+    android:viewportHeight="140">
+  <path
+      android:pathData="m140,70a70,70 0,0 1,-70 70,70 70,0 0,1 -70,-70 70,70 0,0 1,70 -70,70 70,0 0,1 70,70z"
+      android:strokeWidth="3.0372"
+      android:fillColor="#ffffff"
+      android:fillAlpha="0.00272229"/>
+  <path
+      android:pathData="m70,28.353c1.11,0 2.003,0.893 2.003,2.003v33.503c0,1.11 -0.893,2.003 -2.003,2.003 -1.11,0 -2.003,-0.893 -2.003,-2.003L67.997,30.356c0,-1.11 0.893,-2.003 2.003,-2.003z"
+      android:strokeWidth="0.287079"
+      android:fillColor="#808080"/>
+  <path
+      android:pathData="m76,70a6,6 0,0 1,-6 6,6 6,0 0,1 -6,-6 6,6 0,0 1,6 -6,6 6,0 0,1 6,6z"
+      android:strokeWidth="2.2973"
+      android:fillColor="#808080"/>
+</vector>

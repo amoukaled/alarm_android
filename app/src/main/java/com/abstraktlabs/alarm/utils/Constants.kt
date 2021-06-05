@@ -29,4 +29,5 @@ object Constants {
     const val SETTINGS_PREF = "settingsPref"
     const val STACKED_CLOCK_FACE = "stackedClockFace"
     const val EXPANDED_CLOCK_FACE = "expandedClockFace"
+    const val CLASSIC_CLOCK_FACE = "classicClockFace"
 }
