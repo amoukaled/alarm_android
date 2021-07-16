@@ -37,7 +37,7 @@ import com.abstraktlabs.alarm.R
  * Helper class for alarm notification.
  */
 object NotificationHelper {
-    //TODO check not channel
+
     private const val channelId = "alarmChannel"
 
     /**

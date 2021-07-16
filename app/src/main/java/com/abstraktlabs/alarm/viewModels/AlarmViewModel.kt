@@ -22,10 +22,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import com.abstraktlabs.alarm.models.DispatcherProvider
-import com.abstraktlabs.alarm.repositories.DefaultAlarmRepository
+import com.abstraktlabs.alarm.repositories.AlarmRepository
 import com.abstraktlabs.alarm.room.AlarmEntity
-
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
@@ -34,19 +32,18 @@ import kotlinx.coroutines.withContext
 
 import javax.inject.Inject
 
-@HiltViewModel
 class AlarmViewModel @Inject constructor(
-    private val repo: DefaultAlarmRepository,
+    private val alarmRepository: AlarmRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
     init {
         viewModelScope.launch(dispatchers.io) {
-            repo.updateAlarms()
+            alarmRepository.updateAlarms()
         }
     }
 
-    val alarms: StateFlow<MutableList<AlarmEntity>> = repo.repoAlarms
+    val alarms: StateFlow<MutableList<AlarmEntity>> = alarmRepository.alarms
 
     /**
      * Adds and starts the alarm.
@@ -56,7 +53,7 @@ class AlarmViewModel @Inject constructor(
         scope: CoroutineScope = viewModelScope
     ) {
         scope.launch(dispatchers.io) {
-            repo.addAlarm(alarmEntity)
+            alarmRepository.addAlarm(alarmEntity)
             alarmEntity.startAlarm(context)
         }
     }
@@ -73,7 +70,7 @@ class AlarmViewModel @Inject constructor(
         // the adapter when the animation finishes.
 
         scope.launch(dispatchers.io) {
-            repo.deleteAlarm(alarmEntity)
+            alarmRepository.deleteAlarm(alarmEntity)
 
             callback?.let {
                 withContext(dispatchers.main) {
@@ -88,7 +85,7 @@ class AlarmViewModel @Inject constructor(
      */
     fun updateAlarm(alarmEntity: AlarmEntity, scope: CoroutineScope = viewModelScope) {
         scope.launch(dispatchers.io) {
-            repo.updateAlarm(alarmEntity)
+            alarmRepository.updateAlarm(alarmEntity)
         }
     }
 
@@ -97,7 +94,7 @@ class AlarmViewModel @Inject constructor(
      */
     fun refresh() {
         viewModelScope.launch(dispatchers.io) {
-            repo.updateAlarms()
+            alarmRepository.updateAlarms()
         }
     }
 }

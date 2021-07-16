@@ -34,6 +34,7 @@ import com.abstraktlabs.alarm.fragments.*
 import com.abstraktlabs.alarm.models.ClockFace
 import com.abstraktlabs.alarm.utils.SharedPreferencesHelper
 import com.abstraktlabs.alarm.viewModels.AlarmViewModel
+import com.abstraktlabs.alarm.viewModels.AlarmViewModelFactory
 
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,9 +42,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: AlarmViewModelFactory
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var alarmsAdapter: AlarmItemAdapter
@@ -68,7 +73,9 @@ class MainActivity : AppCompatActivity() {
         initHint()
         newAlarmInit()
 
-        val model: AlarmViewModel by viewModels()
+        val model: AlarmViewModel by viewModels {
+            viewModelFactory
+        }
         clockFLInit()
         alarmsRVInit(model)
         stateFlowCollect(model)
@@ -109,7 +116,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun clockFLInit() {
         supportFragmentManager.beginTransaction().apply {
-            when(SharedPreferencesHelper.getClockFace(this@MainActivity)){
+            when (SharedPreferencesHelper.getClockFace(this@MainActivity)) {
                 ClockFace.Stacked -> {
                     replace(binding.clockFL.id, StackedClockFragment())
                     commit()

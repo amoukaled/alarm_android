@@ -45,6 +45,4 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    // todo on doze mode
-
 }

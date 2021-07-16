@@ -22,54 +22,41 @@ import com.abstraktlabs.alarm.room.AlarmDao
 import com.abstraktlabs.alarm.room.AlarmEntity
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 import javax.inject.Inject
 
 class DefaultAlarmRepository @Inject constructor(private val dao: AlarmDao) : AlarmRepository {
 
-    val repoAlarms = MutableStateFlow<MutableList<AlarmEntity>>(mutableListOf())
+    private val _alarms = MutableStateFlow<MutableList<AlarmEntity>>(mutableListOf())
+    override val alarms: StateFlow<MutableList<AlarmEntity>> = _alarms
 
-    /**
-     * Adds an alarm and updates the instance id.
-     * Refreshes the stateflow.
-     */
+
     override suspend fun addAlarm(alarmEntity: AlarmEntity) {
         val id = dao.insertAlarm(alarmEntity)
         alarmEntity.id = id
         updateAlarms()
     }
 
-    /**
-     * Deletes an alarm from the DB.
-     * Refreshes the stateflow.
-     */
+
     override suspend fun deleteAlarm(alarmEntity: AlarmEntity) {
         dao.deleteAlarm(alarmEntity)
         updateAlarms()
     }
 
-    /**
-     * Updates an alarm.
-     * Refreshes the stateflow.
-     */
+
     override suspend fun updateAlarm(alarmEntity: AlarmEntity) {
         dao.updateAlarm(alarmEntity)
         updateAlarms()
     }
 
-    /**
-     * Gets all the alarms in the DB.
-     */
+
     override suspend fun getAllAlarms(): List<AlarmEntity> = dao.getAllAlarms()
 
-    /**
-     * Gets an alarm by id.
-     */
+
     override suspend fun getAlarmById(id: Long): AlarmEntity? = dao.getAlarmById(id)
 
-    /**
-     * Cancels an alarm after going off.
-     */
+
     override suspend fun cancelAlarmAfterSetOff(id: Long) {
         this.getAlarmById(id)?.let {
             it.isActive = false
@@ -77,27 +64,19 @@ class DefaultAlarmRepository @Inject constructor(private val dao: AlarmDao) : Al
         }
     }
 
-    /**
-     * Snoozes an alarm after going off.
-     */
+
     override suspend fun snoozeAlarmAfterSetOff(id: Long, context: Context) {
         this.getAlarmById(id)?.snoozeAlarm(context)
     }
 
-    /**
-     * Gets all alarms and emits a new list.
-     */
-    suspend fun updateAlarms() {
+
+    override suspend fun updateAlarms() {
         val dbAlarms = this.getAllAlarms()
-        repoAlarms.emit(dbAlarms.toMutableList())
+        _alarms.emit(dbAlarms.toMutableList())
     }
 
-    /**
-     * Cancels all alarms and re-sets.
-     * If the alarm is snoozing it will be cancelled and
-     * set accordingly.
-     */
-    suspend fun cancelAlarmsAndSet(context: Context) {
+
+    override suspend fun cancelAlarmsAndSet(context: Context) {
         val alarms = this.getAllAlarms()
 
         for (alarm in alarms) {
@@ -108,10 +87,8 @@ class DefaultAlarmRepository @Inject constructor(private val dao: AlarmDao) : Al
         }
     }
 
-    /**
-     * Restarts all active alarms.
-     */
-    suspend fun restartAllActiveAlarms(context: Context) {
+
+    override suspend fun restartAllActiveAlarms(context: Context) {
         val alarms = this.getAllAlarms()
 
         for (alarm in alarms) {

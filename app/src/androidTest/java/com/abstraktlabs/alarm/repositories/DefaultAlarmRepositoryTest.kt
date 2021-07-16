@@ -180,7 +180,7 @@ class DefaultAlarmRepositoryTest {
         var flow: List<AlarmEntity>? = null
 
         val job = scope.launch {
-            repo.repoAlarms.collect {
+            repo.alarms.collect {
                 flow = it
             }
         }
@@ -208,7 +208,7 @@ class DefaultAlarmRepositoryTest {
         // Set up
         var flow: List<AlarmEntity>? = null
         val job = scope.launch {
-            repo.repoAlarms.collect {
+            repo.alarms.collect {
                 flow = it
             }
         }
@@ -245,7 +245,7 @@ class DefaultAlarmRepositoryTest {
         var flow: List<AlarmEntity>? = null
 
         val job = scope.launch {
-            repo.repoAlarms.collect {
+            repo.alarms.collect {
                 flow = it
             }
         }
@@ -280,7 +280,7 @@ class DefaultAlarmRepositoryTest {
         var flow: List<AlarmEntity>? = null
 
         val job = scope.launch {
-            repo.repoAlarms.collect {
+            repo.alarms.collect {
                 flow = it
             }
         }

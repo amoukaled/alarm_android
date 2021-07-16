@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.room.Room
 
 import com.abstraktlabs.alarm.models.DispatcherProvider
+import com.abstraktlabs.alarm.repositories.AlarmRepository
 import com.abstraktlabs.alarm.repositories.DefaultAlarmRepository
 import com.abstraktlabs.alarm.room.AlarmDao
 import com.abstraktlabs.alarm.room.AlarmDatabase
@@ -35,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
 
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [ViewModelModule::class])
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
@@ -50,7 +51,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesAlarmRepo(dao: AlarmDao): DefaultAlarmRepository = DefaultAlarmRepository(dao)
+    fun providesAlarmRepo(dao: AlarmDao): AlarmRepository {
+        return DefaultAlarmRepository(dao)
+    }
 
     @Provides
     @Singleton

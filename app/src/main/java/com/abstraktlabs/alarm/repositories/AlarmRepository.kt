@@ -18,13 +18,64 @@ package com.abstraktlabs.alarm.repositories
 
 import android.content.Context
 import com.abstraktlabs.alarm.room.AlarmEntity
+import kotlinx.coroutines.flow.StateFlow
 
 interface AlarmRepository {
+
+    val alarms: StateFlow<MutableList<AlarmEntity>>
+
+    /**
+     * Adds an alarm and updates the instance id.
+     * Refreshes the stateflow.
+     */
     suspend fun addAlarm(alarmEntity: AlarmEntity)
+
+    /**
+     * Deletes an alarm from the DB.
+     * Refreshes the stateflow.
+     */
     suspend fun deleteAlarm(alarmEntity: AlarmEntity)
+
+    /**
+     * Gets all the alarms in the DB.
+     */
     suspend fun getAllAlarms(): List<AlarmEntity>
+
+    /**
+     * Updates an alarm.
+     * Refreshes the stateflow.
+     */
     suspend fun updateAlarm(alarmEntity: AlarmEntity)
+
+    /**
+     * Gets an alarm by id.
+     */
     suspend fun getAlarmById(id: Long): AlarmEntity?
+
+    /**
+     * Cancels an alarm after going off.
+     */
     suspend fun cancelAlarmAfterSetOff(id: Long)
+
+    /**
+     * Snoozes an alarm after going off.
+     */
     suspend fun snoozeAlarmAfterSetOff(id: Long, context: Context)
+
+    /**
+     * Gets all alarms and emits a new list.
+     */
+    suspend fun updateAlarms()
+
+    /**
+     * Cancels all alarms and re-sets.
+     * If the alarm is snoozing it will be cancelled and
+     * set accordingly.
+     */
+    suspend fun cancelAlarmsAndSet(context: Context)
+
+    /**
+     * Restarts all active alarms.
+     */
+    suspend fun restartAllActiveAlarms(context: Context)
 }

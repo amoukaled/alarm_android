@@ -119,6 +119,3 @@ class StackedClockFragment : Fragment() {
         }
     }
 }
-
-// TODO change colors
-// TODO Profile app performance
